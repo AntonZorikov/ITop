@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <!-- <link rel="stylesheet_main" href="../css/main.css"> -->
-    <link rel="stylesheet_home" href="./home.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="./css/home.css">
     <script>
         const send = { name: "updateposts" };
         let posts;
@@ -22,7 +22,7 @@
             console.log(data);
             for(let i = 0;i < data.length;i++){
               const postsContainer = document.getElementById("posts-container");
-              const postTemplate = `<%- include('./top.ejs', {Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
+              const postTemplate = `<%- include('./top.ejs', {ID: "${data[i].id}", Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
               postsContainer.insertAdjacentHTML("beforeend", postTemplate);
             }
           })
@@ -41,5 +41,4 @@
       <%- include('./bottom.ejs'); %>
 
   </body>
-
 </html>

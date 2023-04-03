@@ -6,6 +6,8 @@ const sequelize = new Sequelize('itop', 'postgres', 'a182736', {
   dialect: 'postgres',
 });
 
+//============POST BLOCK============
+
 const Post = sequelize.define('Post', {
     id: {
       type: Sequelize.INTEGER,
@@ -42,7 +44,6 @@ const Post = sequelize.define('Post', {
 //     console.error('Unable to create table:', error);
 //   });
 sequelize.sync().then(result=>{
-    // console.log(result);
 }).catch(err=> console.log(err));
 
 export async function DB_GET_ALL_POSTS() {
@@ -62,6 +63,18 @@ export async function DB_GET_ALL_POSTS() {
     }
 }
 
+export async function DB_FIND_POST_BY_ID(id_){
+  const post = await Post.findOne({ where: { id: id_ } });
+  const id = post.id;
+  const Name = post.Name;
+  const Text = post.Text;
+  const Rating = post.Rating;
+  const Views = post.Views;
+  const Tags = post.Tags;
+  const values = {id, Name, Text, Rating, Views, Tags}
+  return values
+}
+
 // await Post.create({
 //     Name: "Puton In Programming",
 //     Text: "Python yahoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
@@ -75,6 +88,9 @@ export async function DB_GET_ALL_POSTS() {
 //     console.log(error);
 //     return 0
 // });
+
+//============USER BLOCK============
+
 
 
 
