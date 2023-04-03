@@ -8,33 +8,38 @@
     <!-- <link rel="stylesheet_main" href="../css/main.css"> -->
     <link rel="stylesheet_home" href="./home.css">
     <script>
-        const data = { name: "updateposts" };
+        const send = { name: "updateposts" };
         let posts;
         fetch("/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(send),
         })
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-
+            for(let i = 0;i < data.length;i++){
+              const postsContainer = document.getElementById("posts-container");
+              const postTemplate = `<%- include('./top.ejs', {Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
+              postsContainer.insertAdjacentHTML("beforeend", postTemplate);
+            }
           })
           .catch((error) => {
             console.error(error);
           });
-      </script>
-      
+    </script>
+
+       
 </head>
-<body>
-    <%- include('./header.ejs'); %>
-    <%- include('./top.ejs'); %>
-    <%- include('./top.ejs'); %>
-    <%- include('./top.ejs'); %>
-    <%- include('./top.ejs'); %>
-    <%- include('./top.ejs'); %>
-      
-</body>
+  <body>
+      <%- include('./header.ejs'); %>
+      <div id = "posts-container">
+
+      </div>
+      <%- include('./bottom.ejs'); %>
+
+  </body>
+
 </html>

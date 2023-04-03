@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path'
 import bodyParser from "body-parser"
 import chalk from 'chalk';
-import { DB_GET_ALL_USERS } from "./DB.js";
+import { DB_GET_ALL_POSTS } from "./DB.js";
 
 
 const app = express()
@@ -25,7 +25,7 @@ app.post('/', async (req, res) => {
   console.log(chalk.bgGreen(name, username, password, email));
   if(name == 'updateposts'){
     console.log(chalk.bgGreen('update posts'));
-    const result = await DB_GET_ALL_USERS();
+    const result = await DB_GET_ALL_POSTS();
     res.send(result);
   }
 });

@@ -45,13 +45,16 @@ sequelize.sync().then(result=>{
     // console.log(result);
 }).catch(err=> console.log(err));
 
-export async function DB_GET_ALL_USERS() {
+export async function DB_GET_ALL_POSTS() {
     try {
         const posts = await Post.findAll();
         const id = posts.map(post => post.id);
         const name = posts.map(post => post.Name);
         const Text = posts.map(post => post.Text);
-        const values = {id, name, Text}
+        const Rating = posts.map(post => post.Rating);
+        const Views = posts.map(post => post.Views);
+        const Tags = posts.map(post => post.Tags);
+        const values = {id, name, Text, Rating, Views, Tags}
         return posts;
     } catch (err) {
         console.error('Error retrieving posts:', err);
