@@ -22,6 +22,14 @@ app.get('/', (req, res) => {
   res.render('home')
 })
 
+app.get('/signin', (req, res) => {
+  res.render('signin')
+})
+
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
 app.get('/post', async(req, res) => {
   const postId = req.query.id;
   console.log(chalk.bgGreen("Load post with id: " + postId));

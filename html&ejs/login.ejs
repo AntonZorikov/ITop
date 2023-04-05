@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/account.css">
+    <script>
+      function LogIn(){
+        const name = document.getElementById("name").value;
+        const password = document.getElementById("password").value;
+        const r_password = document.getElementById("r-password").value;
+        const email = document.getElementById("email").value;
+        const error_block = document.getElementById("error");
+        let count1 = 0
+        let count2 = 0
+        for(let i = 0; i < email.length; i++){
+          if(email[i] === '@'){
+            count1++
+          }
+        }
+        for(let i = 0; i < email.length; i++){
+          if(email[i] === '.'){
+            count2++
+          }
+        }
+        if(password!=r_password){
+          error_block.innerHTML = "Password mismatch"
+        }
+        else if(password.length < 6){
+          error_block.innerHTML = "Password must be longer than 5 characters"
+        }
+        else if(count1 != 1 || count2 != 1){
+          error_block.innerHTML = "Email is not correct"
+        }
+        else{
+          console.log(name, password, r_password, email);
+          error_block.innerHTML = ""
+          const data = { username: name, password: password , email: email};
+          fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }).then(response => response.json()).then(data => {
+            console.log(data);
+          }).catch(error => {console.error(error);});         
+        }
+      }
+    </script>
+</head>
+<body>
+    <div class="account-header">
+        <div class="name-header">
+          ITop
+        </div>
+        <div class="name2-header">
+          Account
+        </div>
+    </div>
+    <hr style="color: black;">
+    <div class="account-body">
+        <h2 class = "text">Log In</h2>
+        <h3 class = "text">Email:</h3>
+        <input id = "email" class = "input" width="100px"></input>
+        <h3 class = "text">Name:</h3>
+        <input id = "name" class = "input" width="100px"></input>
+        <h3 class = "text">Password:</h3>
+        <input id = "password" class = "input" width="100px"></input>
+        <h3 class = "text">Repeat password:</h3>
+        <input id = "r-password" class = "input" width="100px"></input>
+        <div id = "error">
+        </div>
+        <button class = "signin-btn" onclick="LogIn()"> Log In </button>
+        <br>
+        <h5 class = "text">Already have an account?</h5>
+        <h5 class = "text"><a href="signin" style="text-decoration: none; color:rgb(43, 148, 161);">Sign In</a></h5>
+        <br>
+
+    </div>
+    <!-- <div class="account-footer">
+
+    </div> -->
+</body>
+</html>

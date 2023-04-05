@@ -1,0 +1,110 @@
+.account-header{
+    color: #000000;
+    background-color: #acacac;
+    height: 100px;
+}
+
+.account-footer{
+    color: #000000;
+    background-color: #acacac;
+    height: 100px;
+    margin-top: 5%;
+}
+
+.name-header{
+    font-size:50px;
+    text-align: center;
+}
+
+.name2-header{
+    font-size:x-large;
+    text-align: center;
+}
+
+h2.text{
+    margin-left: 30px;
+    color: #131313;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h3.text{
+    margin-top: 20px;
+    margin-left: 30px;
+    color: #131313;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h5.text{
+    margin-top: 200px;
+    margin: auto;
+    text-align: center;
+    color: #131313;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.input{
+    margin-top: 20px;
+    width: 80%;
+    height: 40px;
+    margin-left: 30px;
+    padding-right: 30px;
+}
+
+.signin-btn{
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    display: block; 
+    margin: auto; 
+    margin-top: 20px;
+    text-align: center;
+    background-color: rgb(43, 148, 161);
+    border-radius: 5px;
+    border-style: solid;
+    border: 50px;
+    color: white;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+
+body{
+    background-color: rgb(230, 230, 230);
+}
+
+#error{
+    margin-top: 15px;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+}
+
+@media only screen and (min-width: 550px) {
+    .account-body{
+        width: 400px;
+        padding-top: 5%;
+        margin: auto;
+        margin-top: 5%;
+
+        background-color: white;
+
+    }
+}
+@media only screen and (max-width: 550px) {
+    .account-body{
+        width: 100%;
+        padding-top: 5%;
+        margin: auto;
+        margin-top: 5%;
+
+        background-color: white;
+
+    }
+}

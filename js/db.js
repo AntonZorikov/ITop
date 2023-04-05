@@ -90,7 +90,55 @@ export async function DB_FIND_POST_BY_ID(id_){
 // });
 
 //============USER BLOCK============
+const User = sequelize.define('User', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  Name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },  
+  Email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  Password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },  
+  Salt: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  Description: {
+    type: Sequelize.STRING,
+  },
+  Rating: {
+      type: Sequelize.FLOAT,
+  },
+  Reg_Date: {
+      type: Sequelize.STRING,
+      allowNull: false,
+  },
+  Vis_Date: {
+      type: Sequelize.STRING,
+  },
+  Img: {
+      type: Sequelize.STRING,
+  },
+});
 
+User.sync()
+.then(() => {
+  console.log('Table created successfully.');
+})
+.catch((error) => {
+  console.error('Unable to create table:', error);
+});
 
 
 

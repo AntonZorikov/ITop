@@ -5,40 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="../css/main.css">    
     <script>
-        const send = { name: "updateposts" };
-        let posts;
-        fetch("/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(send),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            for(let i = 0;i < data.length;i++){
-              const postsContainer = document.getElementById("posts-container");
-              const postTemplate = `<%- include('./top.ejs', {ID: "${data[i].id}", Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
-              postsContainer.insertAdjacentHTML("beforeend", postTemplate);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+      const send = { name: "updateposts" };
+      let posts;
+      fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(send),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for(let i = 0;i < data.length;i++){
+          const postsContainer = document.getElementById("posts-container");
+          const postTemplate = `<%- include('./top.ejs', {ID: "${data[i].id}", Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
+          postsContainer.insertAdjacentHTML("beforeend", postTemplate);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     </script>
 
        
 </head>
   <body>
-      <%- include('./header.ejs'); %>
-      <div id = "posts-container">
+    <%- include('./header.ejs'); %>
+    <div id = "posts-container">
 
-      </div>
-      <%- include('./bottom.ejs'); %>
-
+    </div>
+    <%- include('./bottom.ejs'); %>
   </body>
 </html>
