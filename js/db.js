@@ -1,5 +1,8 @@
 import Sequelize from "sequelize"
+import bcrypt from "bcrypt";
 import chalk from 'chalk';
+
+const saltRounds = 10;
 
 const sequelize = new Sequelize('itop', 'postgres', 'a182736', {
   host: 'localhost',
@@ -90,6 +93,7 @@ export async function DB_FIND_POST_BY_ID(id_){
 // });
 
 //============USER BLOCK============
+
 const User = sequelize.define('User', {
   id: {
     type: Sequelize.INTEGER,
@@ -132,13 +136,49 @@ const User = sequelize.define('User', {
   },
 });
 
-User.sync()
-.then(() => {
-  console.log('Table created successfully.');
-})
-.catch((error) => {
-  console.error('Unable to create table:', error);
-});
+export async function DB_CREATE_USER(data){
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(data.password, salt);
+  try {
+    await User.create({
+      Name: data.username,
+      Email: data.email,
+      Password: hash,
+      Salt: salt,
+      Description: "",
+      Rating: 0,
+      Reg_Date: new Date().toString(),
+      Vis_Date: new Date().toString(),
+    });
+    return 1;
+  } catch (error) {
+    return 0;
+  }
+}
+
+export async function DB_GET_USER_BY_ID(data){
+  const user = await User.findOne({ where: { Email: data.email } });
+  console.log(user);
+  const password_user = user.Password
+  const salt = user.Salt
+  console.log(data.password, salt);
+  const password_hash = await bcrypt.hash(data.password, salt);
+  console.log(chalk.bgBlue(password_user, password_hash));
+  if(password_user == password_hash){
+    return 1
+  }
+  else{
+    return 0
+  }
+}
+
+// User.sync()
+// .then(() => {
+//   console.log('Table created successfully.');
+// })
+// .catch((error) => {
+//   console.error('Unable to create table:', error);
+// });
 
 
 

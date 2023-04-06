@@ -7,6 +7,33 @@
     <title>Document</title>
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/account.css">
+    <script>
+      function SignIn(){
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+      
+        console.log( email, password);
+        const data = { email: email, password: password };
+        fetch('/signin', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(response => {
+          console.log(response.status);
+          if(response.status == 200){
+            const error_block = document.getElementById("error")
+            error_block.innerHTML = "err"
+          }
+          else if(response.status == 500){
+            const error_block = document.getElementById("error")
+            error_block.innerHTML = ""
+          }
+        }).catch(error => {console.error(error);});         
+      }
+    </script>
 </head>
 <body>
     <div class="account-header">
@@ -21,10 +48,12 @@
     <div class="account-body">
         <h2 class = "text">Sign In</h2>
         <h3 class = "text">Email:</h3>
-        <input class = "input" width="100px"></input>
+        <input id = "email" class = "input" width="100px"></input>
         <h3 class = "text">Password:</h3>
-        <input class = "input" width="100px"></input>
-        <button class = "signin-btn"> Sign In </button>
+        <input id = "password" class = "input" width="100px"></input>
+        <div id = "error">
+        </div>
+        <button class = "signin-btn" onclick="SignIn()"> Sign In </button>
         <br>
         <h5 class = "text">Already have an account?</h5>
         <h5 class = "text"><a href="login" style="text-decoration: none; color:rgb(43, 148, 161);">Log In</a></h5>

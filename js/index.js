@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path'
 import bodyParser from "body-parser"
 import chalk from 'chalk';
-import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID } from "./DB.js";
+import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_GET_USER_BY_ID } from "./DB.js";
 import { log } from "console";
 
 
@@ -17,27 +17,14 @@ app.set('views', path.resolve(__dir, 'html&ejs'))
 app.use(express.static(path.resolve(__dir, 'static')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
+app.use(express.json());
+
+
+//============HOME============
 
 app.get('/', (req, res) => {
   res.render('home')
 })
-
-app.get('/signin', (req, res) => {
-  res.render('signin')
-})
-
-app.get('/login', (req, res) => {
-  res.render('login')
-})
-
-app.get('/post', async(req, res) => {
-  const postId = req.query.id;
-  console.log(chalk.bgGreen("Load post with id: " + postId));
-  const result = await DB_FIND_POST_BY_ID(postId);
-  res.render('post', {postInf: result})
-
-});
-
 
 app.post('/', async (req, res) => {
   const { name, username, password, email } = req.body;
@@ -48,6 +35,57 @@ app.post('/', async (req, res) => {
     res.send(result);
   }
 });
+
+//============SIGN IN============
+
+app.get('/signin', (req, res) => {
+  res.render('signin')
+})
+
+app.post('/signin', async(req, res) => {
+  const password = req.body.password;
+  const email = req.body.email;
+  console.log(chalk.bgGreen("Signin In: ", email, password));
+  const data = { password: password , email: email};
+  const result = await DB_GET_USER_BY_ID(data);
+  if(result == 1){
+    res.sendStatus(500);
+  } 
+  else {
+    res.sendStatus(200);
+  }});
+
+//============LOG IN============
+
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
+app.post('/login', async(req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
+  console.log(chalk.bgGreen("Log In: ", username, email, password));
+  const data = { username: username, password: password , email: email};
+  const result = await DB_CREATE_USER(data);
+  if(result == 1){
+    res.sendStatus(500);
+  } else {
+    res.sendStatus(200);
+  }});
+
+//============POST============
+
+app.get('/post', async(req, res) => {
+  const postId = req.query.id;
+  console.log(chalk.bgGreen("Load post with id: " + postId));
+  const result = await DB_FIND_POST_BY_ID(postId);
+  res.render('post', {postInf: result})
+});
+
+
+//============================
+
 
 app.listen( PORT, () => {
   console.log(chalk.bgWhite.black(`Server listen on ${PORT}`));
