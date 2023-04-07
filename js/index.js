@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path'
 import bodyParser from "body-parser"
 import chalk from 'chalk';
-import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_GET_USER_BY_ID } from "./DB.js";
+import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN } from "./db.js";
 import { log } from "console";
 
 
@@ -47,12 +47,21 @@ app.post('/signin', async(req, res) => {
   const email = req.body.email;
   console.log(chalk.bgGreen("Signin In: ", email, password));
   const data = { password: password , email: email};
-  const result = await DB_GET_USER_BY_ID(data);
-  if(result == 1){
-    res.sendStatus(500);
+  const result = await DB_USER_LOGIN(data);
+  console.log("Result:", result);
+  if(result == 0){
+    const response = {
+      ok: false,
+      id: -1
+    }
+    res.json(response)
   } 
   else {
-    res.sendStatus(200);
+    const response = {
+      ok: true,
+      id: result
+    }
+    res.json(response)
   }});
 
 //============LOG IN============

@@ -156,7 +156,7 @@ export async function DB_CREATE_USER(data){
   }
 }
 
-export async function DB_GET_USER_BY_ID(data){
+export async function DB_USER_LOGIN(data){
   const user = await User.findOne({ where: { Email: data.email } });
   console.log(user);
   const password_user = user.Password
@@ -165,7 +165,7 @@ export async function DB_GET_USER_BY_ID(data){
   const password_hash = await bcrypt.hash(data.password, salt);
   console.log(chalk.bgBlue(password_user, password_hash));
   if(password_user == password_hash){
-    return 1
+    return user.id
   }
   else{
     return 0

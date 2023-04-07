@@ -21,15 +21,17 @@
               'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
-        }).then(response => {
-          console.log(response.status);
-          if(response.status == 200){
+        }).then(response => response.json()).then(data => {
+          if(data.ok == false){
             const error_block = document.getElementById("error")
             error_block.innerHTML = "err"
           }
-          else if(response.status == 500){
+          else{
+            console.log(data.id);
             const error_block = document.getElementById("error")
             error_block.innerHTML = ""
+            document.cookie = `id=${data.id}; max-age=" + 60 * 60 * 24 + "; path=/";`
+            // window.location.href = "/"
           }
         }).catch(error => {console.error(error);});         
       }
