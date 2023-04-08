@@ -39,4 +39,12 @@
     </div>
     <%- include('./bottom.ejs'); %>
   </body>
+  <script>
+      const id = document.cookie.split('; ').find(row => row.startsWith('id=')).split('=')[1];
+      if(id > 0){
+        const li = document.getElementById("li");
+        const icon = '<li><a href="/createpost"><img class="user-icon-2" src="./assets/free-icon-pen-point-72181.png" alt="create_post" width="1px" height="1px"></a></li>'
+        li.insertAdjacentHTML("beforeend", icon);
+      }
+  </script>
 </html>

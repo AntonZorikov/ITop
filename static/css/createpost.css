@@ -1,0 +1,90 @@
+@media only screen and (max-width: 200px) {
+    .post{
+        background-color: white;
+        height: 1000px;
+        border-radius: 20px;
+        width: 200px;
+        margin-left: 5%;
+        margin-top: 20px;
+    }
+
+    .title-input{
+        height: 50px;
+        width: 180px;
+        margin-left: 5%;
+        margin-top: 10px;
+    }
+
+    .text-input{
+        height: 70%;
+        width: 90%;
+        margin-left: 5%;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: small;
+    }
+}
+@media only screen and (min-width: 200px) {
+    .post{
+        background-color: white;
+        height: 1000px;
+        border-radius: 20px;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 20px;
+    }
+
+    .title-input{
+        height: 50px;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 10px;
+    }
+
+    .text-input{
+        height: 70%;
+        width: 90%;
+        margin-left: 5%;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: small;
+    }
+}
+
+.title-text{
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    margin-left: 5%;
+    margin-top: 2%;
+
+}
+
+.createpost{
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    display: block; 
+    margin: auto; 
+    margin-top: 20px;
+    text-align: center;
+    background-color: rgb(43, 148, 161);
+    border-radius: 5px;
+    border-style: solid;
+    border: 50px;
+    color: white;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+
+#error{
+    margin-top: 15px;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+}
+
+

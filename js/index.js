@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path'
 import bodyParser from "body-parser"
 import chalk from 'chalk';
-import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN } from "./db.js";
+import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN, DB_CREATE_POST } from "./db.js";
 import { log } from "console";
 
 
@@ -18,7 +18,18 @@ app.use(express.static(path.resolve(__dir, 'static')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(express.json());
+//============CREATE POST============
 
+app.get('/createpost', (req, res) => {
+  res.render('createpost')
+})
+
+app.post('/createpost', async (req, res) => {
+  const { userid, name, text} = req.body;
+  console.log(chalk.bgGreen("Create Post: ", userid, name, text));
+  const data = { userid: userid, name: name , text: text, tags: ""};
+  await DB_CREATE_POST(data);
+});
 
 //============HOME============
 

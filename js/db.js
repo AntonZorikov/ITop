@@ -17,6 +17,9 @@ const Post = sequelize.define('Post', {
       primaryKey: true,
       autoIncrement: true,
     },
+    UserId: {
+      type: Sequelize.INTEGER,
+    },
     Name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -39,13 +42,13 @@ const Post = sequelize.define('Post', {
         allowNull: false,
       },
   });
-//   Post.sync()
-//   .then(() => {
-//     console.log('Table created successfully.');
-//   })
-//   .catch((error) => {
-//     console.error('Unable to create table:', error);
-//   });
+// Post.sync()
+// .then(() => {
+//   console.log('Table created successfully.');
+// })
+// .catch((error) => {
+//   console.error('Unable to create table:', error);
+// });
 sequelize.sync().then(result=>{
 }).catch(err=> console.log(err));
 
@@ -76,6 +79,16 @@ export async function DB_FIND_POST_BY_ID(id_){
   const Tags = post.Tags;
   const values = {id, Name, Text, Rating, Views, Tags}
   return values
+}
+
+export async function DB_CREATE_POST(data){
+  await Post.create({
+      UserId: data.id,
+      Name: data.name,
+      Text: data.text,
+      Tags: data.tags,
+      Date: new Date().toString(),
+  })
 }
 
 // await Post.create({

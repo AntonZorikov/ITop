@@ -30,8 +30,8 @@
             console.log(data.id);
             const error_block = document.getElementById("error")
             error_block.innerHTML = ""
-            document.cookie = `id=${data.id}; max-age=" + 60 * 60 * 24 + "; path=/";`
-            // window.location.href = "/"
+            document.cookie = `id=${data.id}; max-age=${60 * 60 * 24}; path=/`;
+            window.location.href = "/"
           }
         }).catch(error => {console.error(error);});         
       }

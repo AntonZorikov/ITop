@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/createpost.css">
+    <script>
+        function CreatePost(){
+            const title = document.getElementById("title").value;
+            const text = document.getElementById("text").value;
+            const id = document.cookie.split('; ').find(row => row.startsWith('id=')).split('=')[1];
+            if(title.length < 5){
+                const error_block = document.getElementById("error");
+                error_block.innerHTML = "Title less than 6 characters"
+            }
+            else if(text.length < 100){
+                const error_block = document.getElementById("error");
+                error_block.innerHTML = "Text less than 100 characters"
+            }
+            else{
+                const data = {userid: id, name: title, text: text}
+                fetch('/createpost', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })  
+                const error_block = document.getElementById("error");
+                error_block.innerHTML = ""
+                const createbtn = document.getElementById("createbtn")
+                createbtn.remove()
+                const gohome = document.getElementById("gohome")
+                gohome.style.display = "block"
+            }
+        }
+        function Open(){
+            window.location.href = "/"
+        }
+    </script>
+</head>
+<body style="background-color: rgb(221, 221, 221);">
+    <%- include('./header.ejs'); %>
+    <div id = "post-block" class="post">
+        <br>
+        <div class="title-text">
+            Title:
+        </div>
+        <input id = "title" class="title-input"></input>
+        <br>
+        <div class="title-text">
+            Text:
+        </div>
+        <textarea id = "text" class="text-input" style="resize: none;"></textarea>
+        <div id = error>
+        </div>
+        <button id = "createbtn" class="createpost" onclick="CreatePost()">Create Post</button>
+        <button id = "gohome" class="createpost" onclick="Open()" style="display: none;">Go To Home Page</button>
+    </div>
+
+</body>
+</html>

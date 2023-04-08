@@ -9,23 +9,24 @@
 
 .post{
     height: 200px;
-    width: 80%;
+    width: 90%;
     background-color: rgb(255, 255, 255);
-    border-radius: 30px;
+    border-radius: 10px;
     overflow: hidden;
 
 }
 .post_head{
-    height: 40px;
+    height: auto;
     display: flex; 
-    align-items: center; 
     justify-content: flex-start;
     font-size: large;
-    background-color: rgb(127, 178, 255);
+    background-color: rgb(190, 190, 190);
     overflow: hidden;
 }
 .post_head_text{
     margin-left: 20px;
+    text-align: start;
+
 }
 
 .post_body{
