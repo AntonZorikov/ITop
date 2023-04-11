@@ -49,12 +49,10 @@ const Post = sequelize.define('Post', {
 // .catch((error) => {
 //   console.error('Unable to create table:', error);
 // });
-sequelize.sync().then(result=>{
-}).catch(err=> console.log(err));
 
 export async function DB_GET_ALL_POSTS() {
     try {
-        const posts = await Post.findAll();
+        const posts = await Post.findAll({order: [['createdAt', 'DESC']]});
         const id = posts.map(post => post.id);
         const name = posts.map(post => post.Name);
         const Text = posts.map(post => post.Text);
@@ -69,15 +67,20 @@ export async function DB_GET_ALL_POSTS() {
     }
 }
 
-export async function DB_FIND_POST_BY_ID(id_){
-  const post = await Post.findOne({ where: { id: id_ } });
-  const id = post.id;
-  const Name = post.Name;
-  const Text = post.Text;
-  const Rating = post.Rating;
-  const Views = post.Views;
-  const Tags = post.Tags;
-  const values = {id, Name, Text, Rating, Views, Tags}
+export async function DB_FIND_POST_BY_ID(id_, increment){
+  const post = await Post.findOne({ where: { id: id_ } })
+  const id = post.id
+  const Name = post.Name
+  const Text = post.Text
+  const Rating = post.Rating
+  const Views = post.Views
+  const Tags = post.Tags
+  const Likes = 0
+  if(increment == true){
+    post.Views += 1
+  }
+  const values = {id, Name, Text, Rating, Views, Tags, Likes}
+  post.save()
   return values
 }
 
@@ -87,6 +90,8 @@ export async function DB_CREATE_POST(data){
       Name: data.name,
       Text: data.text,
       Tags: data.tags,
+      Views: 0,
+      Rating: 0,
       Date: new Date().toString(),
   })
 }
@@ -193,6 +198,56 @@ export async function DB_USER_LOGIN(data){
 //   console.error('Unable to create table:', error);
 // });
 
+//============LIKES BLOCK============
+
+const Like = sequelize.define('Like', {
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  postId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  }
+});
+
+function Create_Like_Table(){
+  Like.sync().then(() => {
+    console.log('Table created successfully.');
+  }).catch((error) => {
+    console.error('Unable to create table:', error);
+  });
+}
+
+export async function DB_FIND_LIKE(data){
+  const like = await Like.findOne({ where: { userId: data.userId, postId: data.postId } });
+  if(like){
+    return 1
+  }
+  else{
+    return 0
+  }
+}
+
+export async function DB_CREATE_LIKE(data){
+  const result = await DB_FIND_LIKE(data)
+  console.log(data);
+  console.log(result);
+  if(result == 0){
+    try {
+      await Like.create({
+        userId: data.userId,
+        postId: data.postId,
+      });
+      return 1;
+    } catch (error) {
+      return 0;
+    }
+  }
+}
+
+sequelize.sync().then(result=>{
+}).catch(err=> console.log(err));
 
 
 

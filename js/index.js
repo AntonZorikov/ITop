@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path'
 import bodyParser from "body-parser"
 import chalk from 'chalk';
-import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN, DB_CREATE_POST } from "./db.js";
+import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN, DB_CREATE_POST, DB_CREATE_LIKE, DB_FIND_LIKE } from "./db.js";
 import { log } from "console";
 
 
@@ -99,8 +99,18 @@ app.post('/login', async(req, res) => {
 app.get('/post', async(req, res) => {
   const postId = req.query.id;
   console.log(chalk.bgGreen("Load post with id: " + postId));
-  const result = await DB_FIND_POST_BY_ID(postId);
-  res.render('post', {postInf: result})
+  const result_post = await DB_FIND_POST_BY_ID(postId, true);
+  const result_like = await DB_FIND_POST_BY_ID(postId, true);
+  res.render('post', {postInf: result_post, Like: result_like})
+});
+
+app.post('/post', async(req, res) => {
+  const user = req.body.userId;
+  const post = req.body.postId;
+  console.log(chalk.bgGreen("Like Post: ", user, post));
+  const data = { userId: user, postId: post}
+  const result = DB_CREATE_LIKE(data)
+  
 });
 
 

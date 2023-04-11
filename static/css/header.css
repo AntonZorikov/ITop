@@ -1,6 +1,6 @@
 .header{
     color: #ffffff;
-    background-color: #3A3A3A;
+    background-color: #243940;
     height: 50px;
     display: flex; 
     align-items: center; 
@@ -9,7 +9,7 @@
 
 .headerdown{
     color: #ffffff;
-    background-color: #595959;
+    background-color: #477280;
     height: 30px;
     display:grid; 
     align-items: center; 

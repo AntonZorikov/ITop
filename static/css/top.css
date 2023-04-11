@@ -20,7 +20,7 @@
     display: flex; 
     justify-content: flex-start;
     font-size: large;
-    background-color: rgb(190, 190, 190);
+    background-color: #6BACBF;
     overflow: hidden;
 }
 .post_head_text{

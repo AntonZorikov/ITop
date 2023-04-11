@@ -7,7 +7,24 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/post.css">
-
+    <script>
+        function Like(){            
+            const id = document.cookie.split('; ').find(row => row.startsWith('id=')).split('=')[1]
+            const send = { postId: <%- postInf.id %>, userId: id };
+            console.log(send);
+            fetch("/post", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(send),
+            }).then((response) => response.json()).then((data) => {
+                console.log(data);
+            }).catch((error) => {
+                console.error(error)
+            });
+        }
+    </script>
 </head>
 <body>
     <%- include('./header.ejs'); %>
@@ -16,6 +33,16 @@
                 <%= postInf.Name %>
             </div>
             <pre class="post-text"><%= postInf.Text %></pre>
+            <br>
+            <div class="post-bottom">
+                <div class="statistic">
+                    Views: 
+                    <%= postInf.Views %>
+                    <a onclick="Like()">Likes: </a>
+                    <%= postInf.Likes %>
+                </div>
+
+            </div>
     </div>
     <%- include('./bottom.ejs'); %>
 </body>
