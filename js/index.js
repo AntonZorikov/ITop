@@ -2,7 +2,8 @@ import express from "express";
 import path from 'path'
 import bodyParser from "body-parser"
 import chalk from 'chalk';
-import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN, DB_CREATE_POST, DB_CREATE_LIKE, DB_FIND_LIKE } from "./db.js";
+import { DB_GET_ALL_POSTS, DB_FIND_POST_BY_ID, DB_CREATE_USER, DB_USER_LOGIN, DB_CREATE_POST,
+         DB_CREATE_LIKE, DB_FIND_LIKE, DB_DELETE_LIKE } from "./db.js";
 import { log } from "console";
 
 
@@ -98,9 +99,10 @@ app.post('/login', async(req, res) => {
 
 app.get('/post', async(req, res) => {
   const postId = req.query.id;
+  const userId = req.query.userid;
   console.log(chalk.bgGreen("Load post with id: " + postId));
   const result_post = await DB_FIND_POST_BY_ID(postId, true);
-  const result_like = await DB_FIND_POST_BY_ID(postId, true);
+  const result_like = await DB_FIND_LIKE(userId, postId);
   res.render('post', {postInf: result_post, Like: result_like})
 });
 
@@ -109,8 +111,13 @@ app.post('/post', async(req, res) => {
   const post = req.body.postId;
   console.log(chalk.bgGreen("Like Post: ", user, post));
   const data = { userId: user, postId: post}
-  const result = DB_CREATE_LIKE(data)
-  
+  const result_like = await DB_FIND_LIKE(data);
+  if(result_like == 1){
+    const result = await DB_DELETE_LIKE(data)
+  }
+  else{
+    const result = await DB_CREATE_LIKE(data)
+  }
 });
 
 

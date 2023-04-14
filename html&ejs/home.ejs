@@ -19,9 +19,10 @@
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        const id = document.cookie.split('; ').find(row => row.startsWith('id=')).split('=')[1];
         for(let i = 0;i < data.length;i++){
           const postsContainer = document.getElementById("posts-container");
-          const postTemplate = `<%- include('./top.ejs', {ID: "${data[i].id}", Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
+          const postTemplate = `<%- include('./top.ejs', {ID: "${data[i].id}", userID: "${id}", Name: "${data[i].Name}", Text: "${data[i].Text}", Rating: "${data[i].Rating}", Views: "${data[i].Views}", Tags: "${data[i].Tags}"}); %>      `;
           postsContainer.insertAdjacentHTML("beforeend", postTemplate);
         }
       })

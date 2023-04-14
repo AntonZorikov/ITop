@@ -219,12 +219,17 @@ function Create_Like_Table(){
   });
 }
 
-export async function DB_FIND_LIKE(data){
-  const like = await Like.findOne({ where: { userId: data.userId, postId: data.postId } });
-  if(like){
-    return 1
+export async function DB_FIND_LIKE(ui, pi){
+  try{
+    const like = await Like.findOne({ where: { userId: ui, postId: pi } });
+    if(like){
+      return 1
+    }
+    else{
+      return 0
+    }
   }
-  else{
+  catch(error){
     return 0
   }
 }
@@ -243,6 +248,15 @@ export async function DB_CREATE_LIKE(data){
     } catch (error) {
       return 0;
     }
+  }
+}
+
+export async function DB_DELETE_LIKE(data){
+  try {
+    await Post.destroy({ where: { userId: data.userId, postId: data.postId } })
+    return 1;
+  } catch (error) {
+    return 0;
   }
 }
 

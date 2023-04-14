@@ -10,7 +10,7 @@
     <script>
         function Like(){            
             const id = document.cookie.split('; ').find(row => row.startsWith('id=')).split('=')[1]
-            const send = { postId: <%- postInf.id %>, userId: id };
+            const send = { postId: <%- postInf.id %>, userId: parseInt(id) };
             console.log(send);
             fetch("/post", {
                 method: "POST",
@@ -38,12 +38,18 @@
                 <div class="statistic">
                     Views: 
                     <%= postInf.Views %>
-                    <a onclick="Like()">Likes: </a>
-                    <%= postInf.Likes %>
+                    <a id = "like" onclick="Like()">Likes: </a>
+                    <a><%= postInf.Likes %></a>
                 </div>
 
             </div>
     </div>
     <%- include('./bottom.ejs'); %>
 </body>
+<script>
+    if(<%= Like %> == 1){
+        const like = document.getElementById("like")
+        like.style.color = "#FF0000"
+    }
+</script>
 </html>
